@@ -1,0 +1,25 @@
+{
+  "name": "http-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./src/index.js",
+    "test": "npm run test:unit && npm run test:integration",
+    "test:unit": "find ./src -name '*.spec.js' | xargs mocha",
+    "test:integration": "find ./src -name '*.test.js' | xargs mocha"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^8.0.1",
+    "sinon": "^9.0.2",
+    "supertest": "^4.0.2"
+  }
+}

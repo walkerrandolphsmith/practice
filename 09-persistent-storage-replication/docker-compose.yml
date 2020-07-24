@@ -1,0 +1,93 @@
+version: "3.4"
+
+networks:
+  webnet:
+  intranet:
+
+volumes:
+  db:
+  db-replica:
+  db-replica-2:
+
+services:
+  load-balancer:
+    build:
+      context: ./load-balancer
+      dockerfile: Dockerfile
+    ports:
+      - "443:443"
+    networks:
+      - webnet
+    depends_on: 
+      - api
+
+  api:
+    build:
+      context: ./service
+      dockerfile: Dockerfile
+    environment:
+      - MONGO_URI=mongodb://db:27017,db-replica:27017,db-replica-2:27017/dev-deb?replicaSet=rs0
+    networks:
+      - webnet
+      - intranet
+    command: ["npm", "run", "start"]
+    depends_on:
+      - db
+
+  db:
+    build:
+      context: ./db-primary
+      dockerfile: Dockerfile
+    ports:
+      - "27017:27017"
+    networks:
+      - intranet
+    volumes:
+      - db:/data/db
+    restart: always
+    depends_on:
+      - db-replica
+      - db-replica-2
+
+  db-replica:
+    image: mongo
+    ports:
+      - "27018:27017"
+    networks:
+      - intranet
+    volumes:
+      - db-replica:/data/db
+    restart: always
+    command: --replSet rs0
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongo mongo:27017/test --quiet
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+
+  db-replica-2:
+    image: mongo
+    ports:
+      - "27019:27017"
+    networks:
+      - intranet
+    volumes:
+      - db-replica-2:/data/db
+    restart: always
+    command: --replSet rs0
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongo mongo:27017/test --quiet
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+  
+  db-setup:
+    build:
+      context: ./db-setup
+      dockerfile: Dockerfile
+    networks:
+      - intranet
+    depends_on: 
+      - db

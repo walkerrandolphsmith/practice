@@ -1,0 +1,15 @@
+{
+  "name": "feature-toggles",
+  "version": "1.0.0",
+  "description": "Feature toggles, also known as feature flags, allow the runtime behavior of a service to altered via configuration with zero downtime to the service, meaning it does not require recompiling, generating new artifacts, or redeploying a service.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./src/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

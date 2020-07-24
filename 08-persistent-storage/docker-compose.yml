@@ -1,0 +1,43 @@
+version: "3.3"
+
+networks:
+  webnet:
+  intranet:
+
+volumes:
+  data-db:
+
+services:
+  server:
+    build:
+      context: ./load-balancer
+      dockerfile: Dockerfile
+    image: load-balancer-image:1.0
+    ports:
+      - "443:443"
+    networks:
+      - webnet
+    depends_on: 
+      - api
+
+  api:
+    build:
+      context: ./service
+      dockerfile: Dockerfile
+    image: my-serivce-image:1.0
+    environment:
+      - MONGO_URI=mongodb://db:27017/dev-db
+    networks:
+      - webnet
+      - intranet
+    command: ["npm", "run", "start"]
+    depends_on:
+      - db
+
+  db:
+    image: mongo:3.6-jessie
+    container_name: my-db-container
+    networks:
+      - intranet
+    volumes:
+      - data-db:/data/db

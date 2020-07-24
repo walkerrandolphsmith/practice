@@ -1,0 +1,24 @@
+version: "3.3"
+
+networks:
+  webnet:
+
+services:
+  server:
+    build:
+      context: ./load-balancer
+      dockerfile: Dockerfile
+    image: load-balancer-image:1.0
+    ports:
+      - "443:443"
+    networks:
+      - webnet
+
+  api:
+    build:
+      context: ./service
+      dockerfile: Dockerfile
+    image: my-serivce-image:1.0
+    networks:
+      - webnet
+    command: ["npm", "run", "start"]

@@ -1,0 +1,63 @@
+version: "3.3"
+
+networks:
+  webnet:
+  intranet:
+
+volumes:
+  data-db:
+  message-queue:
+
+services:
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    environment:
+      - MONGO_URI=mongodb://db:27017/dev-db
+      - RABBITMQ_URL=amqp://rabbitmq
+    ports:
+    - "3000:3000"
+    networks:
+      - webnet
+      - intranet
+    command: ["npm", "run", "start"]
+    depends_on:
+      - db
+      - rabbitmq
+
+  db:
+    image: mongo:3.6-jessie
+    container_name: my-db-container
+    networks:
+      - intranet
+    volumes:
+      - data-db:/data/db
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    environment: 
+      RABBITMQ_ERLANG_COOKIE: 'secret cookie here'
+    volumes:
+      - message-queue:/var/lib/rabbitmq
+    ports:
+        - 15672:15672
+        - 15671:15671
+        - 5672:5672
+    networks:
+      - intranet
+
+  handler:
+    build:
+      context: ./handler
+      dockerfile: Dockerfile
+    environment:
+      - MONGO_URI=mongodb://db:27017/dev-db
+      - RABBITMQ_URL=amqp://rabbitmq
+    networks:
+      - webnet
+      - intranet
+    command: ["npm", "start"]
+    depends_on:
+      - db
+      - rabbitmq

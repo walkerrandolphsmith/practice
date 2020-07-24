@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment 
+metadata: # info to help identify object
+  name: api
+  labels: # arbitrary key value pairs to provide objects with meaning
+    maturityStage: dev
+    release: stable
+
+spec: # desired state for object
+  selector:
+    matchLabels: # label selectors are intended to match multiple objects
+      maturityState: dev
+      teir: backend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        maturityStage: dev
+        teir: backend
+    spec:
+      containers:
+      - name: api-container
+        image: walkerrandolphsmith/hello-container-orchastration-with-k8s:1.0
+        imagePullPolicy: IfNotPresent
+        resources:
+          requests: 100m
+          memory: 100Mi
+        env:
+          - name: GET_HOSTS_FROM
+            value: dns
+          - name: MY_POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath:
+                  metadata.name # Expose pod information to container via DownwardAPI
+        ports:
+          - containerPort: 3000

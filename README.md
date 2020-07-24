@@ -1,36 +1,9 @@
-Let's create a new directory for our code
-```
-mkdir my-project
-```
+# Practice
+This project demonstrates various programming concepts in isolation. The top-level directories can be thought of as lessons.
+Nothing here is production-ready. Everything is experimental and meant for me to learn. Check out the [wiki](https://github.com/walkerrandolphsmith/practice/wiki) for more details. Check out the [roadmap](https://github.com/walkerrandolphsmith/practice/projects/1) to see what topics are being considered. 
 
-Let's create a new file called README.md to keep track of information about this project
-```
-touch README.md
-```
+## Guide
+Each directory is prefixed with a number (pending completion) to indicate the order in which the lesson should be consumed. Some concepts build on one another.
 
-Let's add a header to indicate the name of the project.
-`.md` indicates this is Markdown format. You'll soon see that it is a lightweight formatting for docuements
-
-```
-# My Project
-```
-
-In order to keep track of the changes to the code and collaborate with other developers we'll make this directory a git repository. More to come on the benefits of git
-
-```
-git init
-```
-
-Now that we have a git repository we can commit these changes to the README file to history and push the changes to allow others to collaborate
-
-First, we'll add the files we want to commit to a staging area.
-
-```
-git add README.md
-```
-
-Second, we will commit the files in our staging area to history with a useful message to indicate what changed. (or why!)
-
-```
-git commit -m "add a readme file"
-```
+## Dependencies
+Each lesson will indicate if there is any software that needs to be installed. Generally, we only need Docker and Minikube.

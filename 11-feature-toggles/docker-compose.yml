@@ -1,0 +1,11 @@
+version: "3.4"
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+    - ./flags.json:/data/flags.json
