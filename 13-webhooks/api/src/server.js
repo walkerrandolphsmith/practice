@@ -10,7 +10,7 @@ mongoose
   .then(() => console.log("Mongo connected"))
   .catch((error) => console.log("Error connecting to mongo", error));
 
-const WEBHOOK_QUEUE = 'WebhookQueue';
+const WEBHOOK_QUEUE = "WebhookQueue";
 const validEventTypes = ["LIKED_POST", "COMMENTED_ON_POST"];
 
 const WebhookSubscriptionModel = mongoose.model(
@@ -25,15 +25,16 @@ let channel;
 const getChannel = () => {
   return new Promise((resolve, reject) => {
     if (channel) return resolve(channel);
-    else amqplib.connect(process.env.RABBITMQ_URL, (error, connection) => {
-      if (error) reject(error);
-      connection.createChannel((channelError, c) => {
-        if (channelError) return reject(channelError)
-        return resolve(c)
-      })
-    })
-  })
-}
+    else
+      amqplib.connect(process.env.RABBITMQ_URL, (error, connection) => {
+        if (error) reject(error);
+        connection.createChannel((channelError, c) => {
+          if (channelError) return reject(channelError);
+          return resolve(c);
+        });
+      });
+  });
+};
 
 const app = express();
 app.use(bodyParser.json());
@@ -83,13 +84,17 @@ app.delete("/subscription/:id", (request, response) => {
 
 app.get("/like/:id", (request, response) => {
   const id = request.params.id;
-  getChannel().then(channel => {
-    channel.assertQueue(WEBHOOK_QUEUE);
-    channel.sendToQueue(WEBHOOK_QUEUE, Buffer.from(JSON.stringify({ eventType: 'LIKED_POST', postId: id })))
-    console.log('message sent');
-    return response.status(200).send({ postId: id, operation: 'liked' });
-  })
-  .catch(error => response.status(500).send({ reason: error }))
+  getChannel()
+    .then((channel) => {
+      channel.assertQueue(WEBHOOK_QUEUE);
+      channel.sendToQueue(
+        WEBHOOK_QUEUE,
+        Buffer.from(JSON.stringify({ eventType: "LIKED_POST", postId: id }))
+      );
+      console.log("message sent");
+      return response.status(200).send({ postId: id, operation: "liked" });
+    })
+    .catch((error) => response.status(500).send({ reason: error }));
 });
 
 module.exports = app;

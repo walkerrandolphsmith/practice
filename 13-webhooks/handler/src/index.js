@@ -34,17 +34,18 @@ const getChannel = () => {
   });
 };
 
-const handleDeliveries = () => getChannel().catch(handleDeliveries)
+const handleDeliveries = () => getChannel().catch(handleDeliveries);
 
-handleDeliveries().then(channel => {
+handleDeliveries().then((channel) => {
   channel.assertQueue(WEBHOOK_QUEUE);
   channel.consume(WEBHOOK_QUEUE, (message) => {
-    const stringPayload = message.content.toString('utf8');
+    const stringPayload = message.content.toString("utf8");
     const payload = JSON.parse(stringPayload);
-    getSubscriptions(payload).then(subscriptions => deliverWebhooks(subscriptions, payload))
+    getSubscriptions(payload).then((subscriptions) =>
+      deliverWebhooks(subscriptions, payload)
+    );
   });
 });
-
 
 const getSubscriptions = (payload) =>
   WebhookSubscriptionModel.find({}).then((subscriptions) =>

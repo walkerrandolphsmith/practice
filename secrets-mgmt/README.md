@@ -18,4 +18,5 @@ curl http://locahost:8200/v1/secret/auth \
 #Read the secret
 curl http://localhost:8200/v1/secret/auth -H "X-Vault-Token: <root-token>"
 ```
+
 We can also view the user interface via `http://localhost:8200/ui/`

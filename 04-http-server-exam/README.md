@@ -4,16 +4,16 @@ URL format follows [RFC 3986](https://tools.ietf.org/html/rfc3986):
 `scheme://host[:port][/path]`
 
 https://localhost:3000/user?username=kyle&status=active
-\_____________________/\__/\__________________________/
-    server URL        endpoint    query parameters
+\_**\*\*\*\***\_\_\_\_**\*\*\*\***/\_\_/\_\***\*\*\*\*\*\*\***\_\***\*\*\*\*\*\*\***/
+server URL endpoint query parameters
 
+We will create a service that can
 
-We will create a service that can 
-* Query for all users
-* Query for users filtered by username
-* Query for a specific user by ID
-* Create a new user
-* Delete an existing user
+- Query for all users
+- Query for users filtered by username
+- Query for a specific user by ID
+- Create a new user
+- Delete an existing user
 
 ```
 paths:
@@ -32,9 +32,9 @@ paths:
                     description: OK
                     content: # Response Body
                         application/json: # Media type
-                        schema: 
+                        schema:
                             type: object
-                            properties: 
+                            properties:
                                 id:
                                     type: integer
                                 username:
@@ -165,8 +165,8 @@ paths:
                                 { reason: "A user with the specified ID was not found" }
 ```
 
-
 As a consumer I can do the following:
+
 ```
 curl http://localhost:3000/user
 curl http://localhost:3000/user/:id

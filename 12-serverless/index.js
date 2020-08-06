@@ -1,4 +1,4 @@
-const { ApolloServer, gql } = require('apollo-server-lambda');
+const { ApolloServer, gql } = require("apollo-server-lambda");
 
 const typeDefs = gql`
   type Query {
@@ -7,23 +7,23 @@ const typeDefs = gql`
 `;
 
 const resolvers = {
-    Query: {
-      hello: () => 'Hello world!',
-    },
-  };
+  Query: {
+    hello: () => "Hello world!",
+  },
+};
 
 const server = new ApolloServer({
-    typeDefs,
-    resolvers,
-    context: ({ event, context }) => ({
-        headers: event.headers,
-        functionName: context.functionName,
-        event,
-        context,
-    }),
-    playground: {
-        endpoint: "/dev/graphql"
-    }
+  typeDefs,
+  resolvers,
+  context: ({ event, context }) => ({
+    headers: event.headers,
+    functionName: context.functionName,
+    event,
+    context,
+  }),
+  playground: {
+    endpoint: "/dev/graphql",
+  },
 });
 
 exports.graphqlHandler = server.createHandler({
