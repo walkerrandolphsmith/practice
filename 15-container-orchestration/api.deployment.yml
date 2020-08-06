@@ -3,28 +3,29 @@ kind: Deployment
 metadata: # info to help identify object
   name: api
   labels: # arbitrary key value pairs to provide objects with meaning
+    name: api
     maturityStage: dev
     release: stable
+    teir: backend
 
 spec: # desired state for object
   selector:
     matchLabels: # label selectors are intended to match multiple objects
-      maturityState: dev
-      teir: backend
+      name: api
   replicas: 1
   template:
     metadata:
       labels:
-        maturityStage: dev
-        teir: backend
+        name: api
     spec:
       containers:
       - name: api-container
         image: walkerrandolphsmith/hello-container-orchastration-with-k8s:1.0
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         resources:
-          requests: 100m
-          memory: 100Mi
+          requests:
+            cpu: 100m
+            memory: 100Mi
         env:
           - name: GET_HOSTS_FROM
             value: dns
