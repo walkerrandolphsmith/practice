@@ -17,7 +17,7 @@ services:
       - MONGO_URI=mongodb://db:27017/dev-db
       - RABBITMQ_URL=amqp://rabbitmq
     ports:
-    - "3000:3000"
+      - "3000:3000"
     networks:
       - webnet
       - intranet
@@ -36,14 +36,14 @@ services:
 
   rabbitmq:
     image: rabbitmq:3-management
-    environment: 
-      RABBITMQ_ERLANG_COOKIE: 'secret cookie here'
+    environment:
+      RABBITMQ_ERLANG_COOKIE: "secret cookie here"
     volumes:
       - message-queue:/var/lib/rabbitmq
     ports:
-        - 15672:15672
-        - 15671:15671
-        - 5672:5672
+      - 15672:15672
+      - 15671:15671
+      - 5672:5672
     networks:
       - intranet
 

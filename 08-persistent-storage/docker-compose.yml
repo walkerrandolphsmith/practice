@@ -17,7 +17,7 @@ services:
       - "443:443"
     networks:
       - webnet
-    depends_on: 
+    depends_on:
       - api
 
   api:

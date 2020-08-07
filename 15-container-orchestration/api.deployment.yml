@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment 
+kind: Deployment
 metadata: # info to help identify object
   name: api
   labels: # arbitrary key value pairs to provide objects with meaning
@@ -19,20 +19,19 @@ spec: # desired state for object
         name: api
     spec:
       containers:
-      - name: api-container
-        image: walkerrandolphsmith/hello-container-orchastration-with-k8s:1.0
-        imagePullPolicy: Always
-        resources:
-          requests:
-            cpu: 100m
-            memory: 100Mi
-        env:
-          - name: GET_HOSTS_FROM
-            value: dns
-          - name: MY_POD_NAME
-            valueFrom:
-              fieldRef:
-                fieldPath:
-                  metadata.name # Expose pod information to container via DownwardAPI
-        ports:
-          - containerPort: 3000
+        - name: api-container
+          image: walkerrandolphsmith/hello-container-orchastration-with-k8s:1.0
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+          env:
+            - name: GET_HOSTS_FROM
+              value: dns
+            - name: MY_POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name # Expose pod information to container via DownwardAPI
+          ports:
+            - containerPort: 3000

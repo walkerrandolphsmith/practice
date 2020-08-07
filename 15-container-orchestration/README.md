@@ -10,7 +10,8 @@ Docker compose was a useful tool to start multiple containers, but we'll need to
 
 TO run Kubernetes locally in a development enviornment we'll need to install Minikube.
 
-When starting minikube run 
+When starting minikube run
+
 ```
  minikube start
  minikube docker-env
@@ -27,7 +28,7 @@ Our HTTP service simply response to an endpoint with the IP address of the machi
 
 ```
 apiVersion: apps/v1
-kind: Deployment 
+kind: Deployment
 metadata: # info to help identify object
   name: api
   labels: # arbitrary key value pairs to provide objects with meaning
@@ -67,6 +68,7 @@ spec: # desired state for object
 ```
 
 Now we can apply our deployment
+
 ```
 kubectl apply -f api.deployment.yml
 ```
@@ -75,7 +77,7 @@ The Kubernetes controller will now ensure the container runs within a pod. When 
 
 ```
 apiVersion: v1
-kind: Service 
+kind: Service
 metadata:
   name: api
   labels:
@@ -97,11 +99,13 @@ minikube service api --url
 ```
 
 Now we can make requests to our HTTP sevice:
+
 ```
 curl http://<ip-address>:3000/healthcheck
 ```
 
 We can scale our HTTP service to meet demands and allow Kubernets to handle service discovery. It will round robin requests across pods and keep track of which pod IP addresses are healthy and capable of handling traffic.
+
 ```
 kubectl scale deployment -l name=api --replicas=10
 ```
@@ -109,6 +113,7 @@ kubectl scale deployment -l name=api --replicas=10
 Notice that I scaled the deployments that matched our label selector. This lightweight, but powerful, technique can enable scaling our alpha version while keeping a smaller number of beta versions of our HTTP service deployed. This is one of many scenarios and the labels will become critical.
 
 Telemetry is fundametal to our abililty to support a complex system. Check out all the details of our Kubernetes enviornment by issuing:
+
 ```
 minikube dashboard
-``` 
+```

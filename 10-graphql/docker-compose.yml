@@ -14,10 +14,10 @@ services:
       dockerfile: Dockerfile
     ports:
       - 3000:3000
-    environment: 
+    environment:
       PORT: "3000"
       MONGO_URI: "mongodb://db:27017/dev-db"
-    networks: 
+    networks:
       - webnet
       - intranet
     depends_on:

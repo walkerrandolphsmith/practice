@@ -18,7 +18,7 @@ services:
       - "443:443"
     networks:
       - webnet
-    depends_on: 
+    depends_on:
       - api
 
   api:
@@ -82,12 +82,12 @@ services:
       timeout: 10s
       retries: 5
       start_period: 40s
-  
+
   db-setup:
     build:
       context: ./db-setup
       dockerfile: Dockerfile
     networks:
       - intranet
-    depends_on: 
+    depends_on:
       - db

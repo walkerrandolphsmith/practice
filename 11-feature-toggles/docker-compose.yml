@@ -8,4 +8,4 @@ services:
     ports:
       - "3000:3000"
     volumes:
-    - ./flags.json:/data/flags.json
+      - ./flags.json:/data/flags.json

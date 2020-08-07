@@ -12,6 +12,7 @@ Each directory is prefixed with a number (pending completion) to indicate the or
 Each lesson will indicate if there is any software that needs to be installed. Generally, we only need Docker and Minikube.
 
 ## Linting
+
 ```
 docker-compose up
 ```
