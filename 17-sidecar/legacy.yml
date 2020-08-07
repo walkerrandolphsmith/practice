@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: legacy
+  labels:
+    name: legacy
+spec:
+  selector:
+    matchLabels:
+      name: legacy
+  template:
+    metadata:
+      labels:
+        name: legacy
+    spec:
+      containers:
+        - name: legacy
+          image: walkerrandolphsmith/legacy-logging:2.0
+          ports:
+            - containerPort: 3000
+          env:
+            - name: LOG_PATH
+              value: /var/log/legacy-logging
+            - name: LOG_FILE
+              value: request.log
+          volumeMounts:
+            - name: logging-vol
+              mountPath: /var/log/legacy-logging
+        - name: fdlogger
+          env:
+            - name: FLUENT_UID
+              value: root
+          image: fluent/fluentd:v1.3-debian-1
+          volumeMounts:
+            - name: logging-vol
+              mountPath: /var/log/legacy-logging
+            - name: log-config
+              mountPath: /fluentd/etc/
+      volumes:
+        - name: logging-vol
+          emptyDir: {}
+        - name: log-config
+          configMap:
+            name: fluentd-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: legacy
+  labels:
+    name: legacy
+spec:
+  type: NodePort
+  ports:
+    - port: 3000
+  selector:
+    name: legacy
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fluentd-config
+data:
+  fluent.conf: |
+    <source>
+      @type tail
+      path /var/log/legacy-logging/request.log
+      tag legacy.logger
+      format none
+    </source>
+    <match legacy.logger>
+      @type stdout
+    </match>
