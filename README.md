@@ -1,7 +1,7 @@
 # Practice
 
 This project demonstrates various programming concepts in isolation. The top-level directories can be thought of as lessons.
-Nothing here is production-ready. Everything is experimental and meant for me to learn. Check out the [wiki](https://github.com/walkerrandolphsmith/practice/wiki) for more details. Check out the [roadmap](https://github.com/walkerrandolphsmith/practice/projects/1) to see what topics are being considered.
+Nothing here is production-ready. Everything is experimental and meant for me to learn. Topics will be added as [issues](https://github.com/walkerrandolphsmith/practice/issues) and added to the kanban board for planning. Check out the [roadmap](https://github.com/walkerrandolphsmith/practice/projects/1) to see what topics will be worked on next.
 
 ## Guide
 
