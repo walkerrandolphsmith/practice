@@ -1,0 +1,14 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: recurring-workload
+spec:
+  schedule: "*/1 * * * *" # Minutes, Hours, Day of Month, Month, Weekday
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: worker
+              image: walkerrandolphsmith/worker:1.0
+          restartPolicy: OnFailure
