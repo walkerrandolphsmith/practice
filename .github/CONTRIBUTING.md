@@ -36,4 +36,4 @@ Use a passive voice; i.e. commits should read like 👇
 
 [coc]: https://github.com/walkerrandolphsmith/practice/blob/master/.github/CODE_OF_CONDUCT.md
 [issues]: https://github.com/walkerrandolphsmith/practice/issues
-[owners]: https://github.com/walkerrandolphsmith/practice/blob/master/.github/CODEOWNERS.md
+[owners]: https://github.com/walkerrandolphsmith/practice/blob/master/.github/CODE_OWNERS.md
