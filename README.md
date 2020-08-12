@@ -7,20 +7,11 @@ Each top level directory in the repository is numbered and represents a lesson. 
 
 We will rely on github's best practices for [building a strong community][community]. Please refer to the `.github` directory for [code of conduct][coc], [contributing guidelines][contributing] and [support][support].
 
-## Guide
-
-
 ## Sponsorship
 I am excited to contribute what I have learned by demonstrating programming concepts in isolation to combat the paywall barrier that many developers hit early in their software craftsmanship journey. I plan on leveraging this sponsorship program to crowdsource funding from community members who are most capable of monetarily contributing while continuing to provide high-quality content and support to those members who are less capable of monetarily contributing. If my mission resonates with you please consider becoming a [sponsor][sponsor]!
 
 > **Goal:**
 Obtain 5 sponsors within the first year of providing lessons. I hope the number of sponsors will reflect a small percentage of the number of people who can gain value from these lessons.
-
-## Linting
-
-```
-docker-compose up
-```
 
 [community]: https://docs.github.com/en/github/building-a-strong-community
 [coc]: https://github.com/walkerrandolphsmith/practice/blob/master/.github/CODE_OF_CONDUCT.md
