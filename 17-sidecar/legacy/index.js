@@ -1,7 +1,7 @@
 const express = require("express");
 const fs = require("fs").promises;
 
-const LOG_PATH = process.env.LOG_PATH
+const LOG_PATH = process.env.LOG_PATH;
 const LOG_FILE = `${LOG_PATH}/${process.env.LOG_FILE}`;
 
 const app = express();
@@ -28,5 +28,5 @@ app.get("/error", async (_, response) => {
 
 app.listen(3000, async () => {
   await fs.mkdir(LOG_PATH, { recursive: true });
-  fs.writeFile(LOG_FILE, `INFO: The app is starting\n`)
+  fs.writeFile(LOG_FILE, `INFO: The app is starting\n`);
 });
