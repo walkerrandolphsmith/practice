@@ -7,18 +7,11 @@ assignees: ''
 
 ---
 
-IMPORTANT: Please determine if this pull request is for an existing issue using the [issue tracker][issues] otherwise create a new issue first. Please refer the [contributing guidelines][contributing].
+When reporting a technical issue with a lesson please refer to the [contributing guidelines][contributing].
 
-Include `closes`, `fixes`, or `resolves` in a commit message to close the issue. For example
+Lesson Number: <Please provide which lesson this issue relates>
 
-```
-git commit -m "closes #34"
-```
-
-## Checklist
-
-- [] My lesson contains a README.md
-- [] My commit messages contain the issue identifier
+Description: <Please describe the situation. Include as much information as possible>
 
 [contributing]: https://github.com/walkerrandolphsmith/practice/blob/master/.github/CONTRIBUTING.md
 [issues]: https://github.com/walkerrandolphsmith/practice/issues
