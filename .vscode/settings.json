@@ -1,0 +1,30 @@
+{
+  "editor.detectIndentation": false,
+  "editor.formatOnSave": true,
+  "editor.insertSpaces": true,
+  "editor.renderWhitespace": "all",
+  "editor.tabSize": 2,
+  "files.associations": {
+    "Dockerfile.*": "dockerfile",
+    "*.jsx": "javascript"
+  },
+  "terminal.integrated.shellArgs.windows": ["-l"],
+  "terminal.integrated.shellArgs.linux": ["-l"],
+  "terminal.integrated.shellArgs.osx": ["-l"],
+  "[javascript]": {
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2
+  },
+  "[json]": {
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2
+  },
+  "[mdx]": {
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2
+  },
+  "[yml]": {
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2
+  }
+}
