@@ -6,6 +6,14 @@ We have managed starting multiple containers with docker compose to avoid runnin
 
 Docker compose was a useful tool to start multiple containers, but we'll need to mature to a platform to handle situations that are more complex than simplying starting containers. Kubernetes enables us to run a distributed system _resiliently_. It provides service discovery, load balancing, automated roll outs and roll backs, self healing and more.
 
+Let's talk about some vocabulary of Kubernetes before we dive in too deep. **Containers** are the building blocks everything is made up of, but we rarely interact with them directly.
+
+**Pods** are groups of containers that are run together, are destroyed together, and scheduled together. This logical grouping helps extract shared functioanlity into a contianer so that it is not bundled into two distinct containers that rely on it. We don't want to bundle log processing functioanlity into both the webserver and the database beacuse updating the log processor would require updates to the webserver and database containers.
+
+**Replication Controllers** workers behind the scenes to ensure your pods are running at the scale you request and perform all the legwork to ensure the system continues to operate in that manner. We scale pods instead of containers.
+
+**Services** splits traffic across replicated pods and acts as a single entrypoint for a group of pods. As pods start and stop services ensure only healthly pods receive traffic.
+
 ## Dependencies
 
 TO run Kubernetes locally in a development enviornment we'll need to install Minikube.

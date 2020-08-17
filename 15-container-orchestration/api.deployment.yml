@@ -12,7 +12,7 @@ spec: # desired state for object
   selector:
     matchLabels: # label selectors are intended to match multiple objects
       name: api
-  replicas: 1
+  replicas: 3
   template:
     metadata:
       labels:
