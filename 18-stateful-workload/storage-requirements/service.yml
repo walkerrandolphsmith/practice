@@ -36,23 +36,6 @@ spec:
       containers:
         - name: service
           image: walkerrandolphsmith/legacy-logging:3.0
-          lifecycle:
-            postStart:
-              exec:
-                command:
-                  [
-                    "/bin/sh",
-                    "-c",
-                    "touch /var/log/legacy-logging/lifecycle.log && echo Hello from the postStart handler > /var/log/legacy-logging/lifecycle.log",
-                  ]
-            preStop:
-              exec:
-                command:
-                  [
-                    "/bin/sh",
-                    "-c",
-                    "echo Hello from the preStop handler > /var/log/legacy-logging/lifecycle.log",
-                  ]
           ports:
             - containerPort: 3000
           env:
