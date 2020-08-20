@@ -35,6 +35,17 @@ Get the IP of the Ingress with:
 kubectl get ingress
 ```
 
-Now update your `/etc/hosts` file with `<ingress ip address> session-affinity.com`.
+We could update our `/etc/hosts` file with `<ingress ip address> session-affinity.com` or use curl's `--resolve` flag!
+Since our server will respond with the sesssion identifier in a cookie we'll need to store those in a file and include them in subsequent requests.
+Fortunatly curl also supports this with `-c`, write cookies to file, and `-b` read cookies from file.
 
-Use various browsers to establish session with different users and notice the hostname remains sticky!
+```
+curl \
+  -c cookie-jar.txt http://session-affinity.com/login?username=walker \
+  --resolve session-affinity.com:172.30.67.137
+
+ curl \
+ -b cookie-jar.txt http://session-affinity.com/post \
+ --resolve session-affinity.com:172.30.67.137
+```
+
