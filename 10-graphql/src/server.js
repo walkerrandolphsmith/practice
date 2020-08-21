@@ -28,7 +28,7 @@ const UserModel = mongoose.model(
 const PostModel = mongoose.model(
   "Post",
   mongoose.Schema({
-    text: {
+    content: {
       type: String,
     },
     userId: {
@@ -51,16 +51,16 @@ const userSchema = gql`
     posts: [Post!]
   }
 `;
-
+// stay consistent with names//
 const postSchema = gql`
   extend type Query {
     posts(limit: Int!, next: String): PostConnection!
     post(id: ID!): Post!
   }
   extend type Mutation {
-    createPost(text: String!): Post!
+    createPost(content: String!): Post!
     deletePost(id: ID!): Boolean!
-    updatePost(id: ID!, text: String!): Post!
+    updatePost(id: ID!, content: String!): Post!
   }
   type PostConnection {
     edges: [Post!]!
@@ -68,7 +68,7 @@ const postSchema = gql`
   }
   type Post {
     id: ID!
-    text: String!
+    content: String!
     author: User!
     createdAt: String!
   }
@@ -105,7 +105,6 @@ const userResolver = {
       }
 
       const user = await models.user.create({ username });
-      console.log(user);
       return { id: user._id, username: user.username };
     },
   },
@@ -123,12 +122,12 @@ const postResolver = {
       cursorPagination(parent, { limit, next }, models.post),
   },
   Mutation: {
-    createPost: async (_, { text }, { models }) => {
-      if (!text) {
+    createPost: async (_, { content }, { models }) => {
+      if (!content) {
         throw new Error("Post can not be empty");
       }
       return await models.post.create({
-        text,
+        content,
         userId: "5f24129678f24f0011bb0f96",
       });
     },
@@ -145,9 +144,9 @@ const postResolver = {
         return await models.post.deleteOne({ id });
       }
     ),
-    updatePost: async (_, { id, text }, { models }) => {
+    updatePost: async (_, { id, content }, { models }) => {
       const findBy = { id };
-      return await models.post.update({ text }, findBy);
+      return await models.post.update({ content }, findBy);
     },
   },
   Post: {
@@ -170,7 +169,7 @@ const cursorPagination = async (_, { limit, next }, Model) => {
   };
 };
 
-const server = new ApolloServer({
+const webSocketServer = new ApolloServer({
   typeDefs: [rootSchema, userSchema, postSchema],
   resolvers: [postResolver, userResolver],
   context: async (_) => {
@@ -193,10 +192,10 @@ const server = new ApolloServer({
 
 const app = express();
 
-server.applyMiddleware({ app, path: "/graphql" });
+webSocketServer.applyMiddleware({ app, path: "/graphql" });
 
 const httpServer = http.createServer(app);
-server.installSubscriptionHandlers(httpServer);
+webSocketServer.installSubscriptionHandlers(httpServer);
 
 exports.httpServer = httpServer;
-exports.server = server;
+exports.webSocketServer = webSocketServer;
