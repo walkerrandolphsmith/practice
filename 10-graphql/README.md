@@ -1,47 +1,71 @@
-GraphQL is a specification used to declare data requirements over a network. We use a GraphQL client implementation called Apollo. [GQL concepts][] is a glossary of terms related to Apollo and Graphql that is a great starting point. Schemas, Queries, Mutations, Subscriptions, Resolvers, and more are covered.
+# Graphql
 
-Underfetching or over fetching is a typical issue with REST APIs. Over fetching occurs when the consumer needs a subset of the response from an API request but has no way to indicate to the server it will respond with more data than is needed before the request is made. Underfetching occurs when a consumer needs to make multiple successive, ordered API requests using some information from the previous request's response in order for the next request to be formed. REST APIs can support specifying what data requirements are needed from the consumer using query parameters however there is not a standardization on this practice and any REST API that supports it requires the consumer to "learn" their data model. GraphQL itself is a specification to declare data requirements and therefore the consumer can learn the specification and it will be transferable to other graphql APIs.
+- A person can author a post that contains textual content
+- A person can view a set of posts and their author's username
 
-We can also use GraphQL to enable querying for complex graphs of data from our backend while taking advantage of caching techniques. For example, imagine a traditional REST API that retrieves a list of users and a subsequent request made for a specific user you are chatting with. When the list and specific user requests return different data how do we update the specific user in the list? How can we leverage cache and not make a full network request for the specif user if their information is available in the first request for the list of users? Apollo enables use to solve this issue in elegant ways.
+## A RESTful approach
 
-Here is an example query for messages' text content and the author's username. GraphQL allowed us to specify exactly what information about a message we needed, excluding other properties of the message we did not care to retrieve.
+A REST API may allow you to query for posts and get back a normalized representation of each post. You see the content of the post and the id of the author.
 
-```gql
-{
-  messages(cursor: 1, limit: 1)  {
-    edges {
-        text,
-        author {
-            username
-        }
-    }
-}
+```
+curl ~/post
+
+[
+  { id: 1, content: "Sammy's first post", authorId: 2 },
+  { id: 2, content: "Sally's first post", authorId: 1 }
+]
 ```
 
-We can make HTTP requests to our server via standard techniques:
+If you want to know the author's username for each post we'll need make a query for each unique author.
+
+```
+curl ~/user/1
+curl ~/user/2
+
+{ id: 1, username: "Sally", avatar: "BASE64-encoded-string" }
+{ id: 2, username: "Sammy", avatar: "BASE64-encoded-string" }
+```
+
+- network latency. Every HTTP request over the network paid a cost in time to transmit the request and receive a response.
+- Under fetching. We didn't get all the data we needed about the author in the first request and will have to fetch more data
+- Over fetching. Now that we fetch data for each author the response contained all aspects of the author when we only needed the username
+- rate limiting. Some apis limit the number of requests in a given time frame and the subsequent requests to author add up fast.
+
+Overfetching can be addressed in REST APIs by providing query parameters to specify what aspects of the resource are desired in the response, but this is non-standard and requires the consumer to "learn" the convention and underlying data model
+
+## Graphql
+
+Graphql is a specification to declare data requirements. We can adhere to this spec to enable querying for graphs of data that contain only the data we request.
+
+```
+{
+  posts(cursor: 1, limit: 2)  {
+    content,
+    author {
+        username
+    }
+}
+
+[
+  { id: 1, content: "Sally's first post", author: { username: "Sally" } },
+  { id: 2, content: "Sammy's first post", author: { username: "Sammy" } },
+]
+```
+
+Instantly we addressed
+
+- reducing network latency
+- no more under fetching
+- no more over fetching
+- reduce number of requests that count toward rate limits
+
+Implemented over standard HTTP protocol:
 
 ```
 curl localhost:3000/graphql \
     --request POST \
     -H "Content-Type: application/json" \
-    --data '{"query": "{messages(cursor: 1, limit: 1) { edges { text, author { username } } } }"}'
-```
-
-```
-{
-  "data": {
-    "messages": {
-      "edges": [
-        {
-          "text": "This is my first message",
-          "author": {
-            "username": "walker"
-          }
-        }
-      ]
-    }
-  }
-}
+    --data '{"query": "{posts(cursor: 1, limit: 1) { edges { content, author { username } } } }"}'
 ```
 
 ## More reading
@@ -68,7 +92,8 @@ We're going to simulate a system that has users who can author posts. We establi
 
 ### The Schema
 
-Using a schema definition language we can describe a user, a post, and their relationship in a way that will strongly type the graphQL API. We are able to describe the domain of users authoring posts independent of how we retrieve and store data to satisfy this contract.
+Describe the domain (user, post, and their relationships) and strongly type the graphQL API.
+Schema is independent of how we retrieve and store data to satisfy this contract.
 
 ```
 const gql = require('apollo-server-express').gql;
@@ -130,7 +155,8 @@ type Subscription {
 
 ### Resolvers
 
-Now we need to "back" this contract with data fetching so that the api can actually respond with data when requests are made. Resolvers are functions that can return data from any source, local cache, multiple databases, other APIS, etc. For now, let's stub out the resolvers and not fetch any data.
+Supply requests with actual data.
+Resolvers return data from any source, local cache, multiple databases, other APIS, etc.
 
 ```
 const userResolver =  {
@@ -315,4 +341,4 @@ const postResolver = {
 
 ### Pagination
 
-Querying for posts presents another interesting situation; requesting too much data. The performance of any client would be poor if we requested posts and all 100 million were returned. We need a way to request posts and supply the maximum number. This number is likely informed by how many posts a client can present to the user in a meaningful way. This number may be different on a phone or laptop.
+Querying for posts presents another interesting situation; requesting too much data. The performance of any client would be poor if we requested posts and all 100 million were returned. We need a way to request posts and supply the maximum number. This number is likely informed by how many posts a client can present to the user in a meaningful way. This number may be different on a phone or laptop.Querying for posts presents another interesting situation; requesting too much data. The performance of any client would be poor if we requested posts and all 100 million were returned. We need a way to request posts and supply the maximum number. This number is likely informed by how many posts a client can present to the user in a meaningful way. This number may be different on a phone or laptop.
