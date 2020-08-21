@@ -49,3 +49,18 @@ curl \
  --resolve session-affinity.com:172.30.67.137
 ```
 
+## Quorum
+
+In some cases like database replication or clustered applications its important to distiniguish a leader from replicas. We'll use stateful sets to generate uniquiely identifiable pods for each mongo instance and use a sidecar to determine which are replicas.
+
+```
+# Apply our statefulset, headless service, and ClusterRoleBinding (needed by the sidecar)
+kubectl apply -f db.yml
+# Apply our deployment and service of our application
+kubectl apply -f api.yml
+# Expose our service outside the cluster
+minikube service api --url
+# Simulate interacting with our api
+curl http://<ip:port>/user --request POST -- data '{"username": "walker"}' -H "ContentType: application/json"
+curl http://<ip:port>/user
+```
