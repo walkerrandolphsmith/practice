@@ -1,5 +1,7 @@
 # Graphql
 
+Consider a system that allow users to author posts.
+
 - A person can author a post that contains textual content
 - A person can view a set of posts and their author's username
 
@@ -26,10 +28,10 @@ curl ~/user/2
 { id: 2, username: "Sammy", avatar: "BASE64-encoded-string" }
 ```
 
-- network latency. Every HTTP request over the network paid a cost in time to transmit the request and receive a response.
+- Network latency. Every HTTP request over the network paid a cost in time to transmit the request and receive a response.
 - Under fetching. We didn't get all the data we needed about the author in the first request and will have to fetch more data
 - Over fetching. Now that we fetch data for each author the response contained all aspects of the author when we only needed the username
-- rate limiting. Some apis limit the number of requests in a given time frame and the subsequent requests to author add up fast.
+- Rate limiting. Some apis limit the number of requests in a given time frame and the subsequent requests to author add up fast.
 
 Overfetching can be addressed in REST APIs by providing query parameters to specify what aspects of the resource are desired in the response, but this is non-standard and requires the consumer to "learn" the convention and underlying data model
 
