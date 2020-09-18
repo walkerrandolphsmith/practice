@@ -24,12 +24,19 @@ curl ~/post
 
 We'll use the ngnix ingress controller beacuse it already supports session affinity! We'll need to include the Kubernetes addon:
 
+Sidenote: my env didn't support this addons so I had to delete all traces of minikube and then start with minikuve with a vm
+
+```
+minikube delete --all
+minikube start --vm=true
+```
+
 ```
 minikube addons enable ingress
 ```
 
 Now using annotations we can configure the Ingress to route active sessions back to the instance that orginally established the session. The ingress is configured with an arbitrary host name. In our case we used `session-affinity.com`. We will need to map that hostname to the IP address of the Ingress.
-Get the IP of the Ingress with:
+It will take some time for your ingress to get an ADDRESS, but soon you can get the IP of the Ingress with:
 
 ```
 kubectl get ingress
