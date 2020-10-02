@@ -5,22 +5,27 @@ metadata:
   labels:
     app: api
 spec:
-  replicas: 5
+  replicas: 3
   selector:
     matchLabels:
       app: api
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
   template:
     metadata:
       labels:
         app: api
-        version: v1.0
+        version: v2.0
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/port: "3000"
     spec:
       containers:
         - name: api
-          image: walkerrandolphsmith/k8s-deployment-strategies:1.0
+          image: walkerrandolphsmith/k8s-deployment-strategies:2.0
           ports:
             - name: http
               containerPort: 3000
@@ -45,7 +50,7 @@ spec:
           resources:
             requests:
               memory: "64Mi"
-              cpu: "250m"
+              cpu: "100m"
             limits:
               memory: "128Mi"
-              cpu: "500m"
+              cpu: "100m"

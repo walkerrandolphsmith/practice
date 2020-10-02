@@ -21,10 +21,3 @@ helm install prometheus --namespace=monitoring stable/prometheus
 helm install grafana --namespace=monitoring --set=adminUser=admin --set=adminPassword=admin --set=service.type=NodePort stable/grafana
 minikube service grafana -n monitoring
 ```
-
-## Recreate
-
-Version 1 of the software is available for customers.
-We build new features and enhance existing features and have version 2 ready to go...
-In order to update the instance we have to run setup which makes the instance temporarily unavailable.
-Once steup completes version 2 is available.
