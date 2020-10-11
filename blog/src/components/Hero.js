@@ -33,7 +33,7 @@ export const Hero = ({ setTheme, slim }) => (
       </div>
     </section>
     <div className="absolute top-0 left-0 right-0 w-100 bg-base-100 h-24">
-      <header className=" body-font">
+      <header>
         <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
           <LogoLink inHero />
           <nav className="md:mr-auto md:ml-4 md:py-1 md:pl-4 flex flex-wrap items-center text-base justify-center"></nav>
@@ -45,7 +45,7 @@ export const Hero = ({ setTheme, slim }) => (
 )
 
 export const KHero = ({ slim }) => (
-  <section className={` body-font ${slim ? "mb-64" : "mb-24"}`}>
+  <section className={` ${slim ? "mb-64" : "mb-24"}`}>
     {!slim && (
       <div className="container mx-auto flex px-5 py-24 items-center justify-center flex-col">
         <div

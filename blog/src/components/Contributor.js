@@ -2,7 +2,7 @@ import React from "react"
 
 export const Contributor = ({ avatar, name, description }) => {
   return (
-    <section className=" body-font">
+    <section>
       <div className="container px-5 py-24 mx-auto">
         <div className="flex flex-col text-center w-full mb-20"></div>
         <div className="flex flex-wrap -m-4">

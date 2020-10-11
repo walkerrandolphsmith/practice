@@ -5,7 +5,7 @@ import { faGithub } from "@fortawesome/free-brands-svg-icons"
 import { LogoLink } from "./LogoLink"
 
 export const Footer = () => (
-  <footer className=" body-font bg-base-800">
+  <footer className=" bg-base-800">
     <div className="container px-5 py-24 mx-auto flex md:items-center lg:items-start md:flex-row md:flex-no-wrap flex-wrap flex-col">
       <div className="w-64 flex-shrink-0 md:mx-0 mx-auto text-center md:text-left md:mt-0 mt-10 text-base-400">
         <LogoLink />
@@ -65,7 +65,6 @@ const FootNotes = () => (
       <p className=" text-sm text-center sm:text-left">© 2020 rockstarlabs</p>
       <span className="inline-flex sm:ml-auto sm:mt-0 mt-2 justify-center sm:justify-start">
         <a
-          className=""
           href="https://github.com/rockstarlabs-io"
           target="_blank"
           rel="noopener noreferrer"

@@ -29,6 +29,7 @@
     "gatsby-plugin-react-helmet": "^3.3.13",
     "gatsby-plugin-react-svg": "^3.0.0",
     "gatsby-plugin-sharp": "^2.6.39",
+    "gatsby-remark-classes": "^1.0.0",
     "gatsby-remark-images": "^3.3.33",
     "gatsby-remark-prismjs": "^3.5.16",
     "gatsby-source-filesystem": "^2.3.33",

@@ -4,7 +4,7 @@ import walker from "../images/walker.jpg"
 import aguzman from "../images/aguzman.jpg"
 
 export const OurTeam = () => (
-  <section className=" body-font">
+  <section>
     <div className="container px-5 py-48 mx-auto">
       <div className="flex flex-col text-center w-full mb-20">
         <h1 className="text-2xl font-medium title-font mb-4 text-base-900 tracking-widest">

@@ -1,18 +1,24 @@
-const remarkPlugin = {
-  resolve: "gatsby-transformer-remark",
-  options: {
-    plugins: [
-      {
-        resolve: `gatsby-remark-images`,
-        options: {
-          maxWidth: 590,
-        },
-      },
-      "gatsby-remark-prismjs",
-    ],
+const remarkPlugins = [
+  {
+    resolve: `gatsby-remark-images`,
+    options: {
+      maxWidth: 590,
+    },
   },
-}
-
+  "gatsby-remark-prismjs",
+  {
+    resolve: `gatsby-remark-classes`,
+    options: {
+      classMap: {
+        "heading[depth=1]":
+          "text-2xl font-medium title-font mb-4 text-base-900 tracking-widest",
+        "heading[depth=2]": "text-base-900 text-lg mb-1 font-medium title-font",
+        "heading[depth=3]": "text-lg",
+        paragraph: "leading-relaxed text-base",
+      },
+    },
+  },
+]
 module.exports = {
   pathPrefix: `/`,
   siteMetadata: {
@@ -63,7 +69,12 @@ module.exports = {
         path: `${__dirname}/src/routes/`,
       },
     },
-    "gatsby-plugin-mdx",
+    {
+      resolve: `gatsby-plugin-mdx`,
+      options: {
+        gatsbyRemarkPlugins: remarkPlugins,
+      },
+    },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -72,6 +83,11 @@ module.exports = {
       },
     },
     `gatsby-plugin-sharp`,
-    remarkPlugin,
+    {
+      resolve: "gatsby-transformer-remark",
+      options: {
+        plugins: remarkPlugins,
+      },
+    },
   ],
 }
