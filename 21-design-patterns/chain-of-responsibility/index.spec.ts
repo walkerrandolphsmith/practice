@@ -18,7 +18,7 @@ test('Return a 200 status code given a valid access token and properly formatted
   t.is(rule.eval(request, response).status, 200);
 });
 
-test('Return a 401 given an valid access token', (t) => {
+test('Return a 401 given an invalid access token', (t) => {
   const request = {
     headers: { Authorization: 'INVALID TOKEN' },
     body: { prop: 'myProperty', value: "newValue" }
