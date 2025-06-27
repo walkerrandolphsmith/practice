@@ -10,7 +10,7 @@ fi
 
 PARAM="$1"
 
-# git checkout -b "feature/$PARAM"
+git checkout -b "feature/$PARAM"
 
 # Create directory and files
 mkdir -p "./leet-code/$PARAM"
