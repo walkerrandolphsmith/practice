@@ -20,3 +20,6 @@ So what can we try?
 I challenge leaders and teams to rethink their delivery boards. Let’s shift from ticking off tasks to telling the story of impact.
 
 👇 How does your team define “Done”? What steps have you taken to align delivery with actual value? Share your experiences and let’s learn together.
+
+
+https://www.linkedin.com/posts/walkerrandolphsmith_when-done-is-a-lie-why-our-delivery-activity-7356279691583836161-LnGv?utm_source=share&utm_medium=member_desktop&rcm=ACoAAAqnqGQB9vu4sAnxFYA9TgPi-2AeQbt3qsE
